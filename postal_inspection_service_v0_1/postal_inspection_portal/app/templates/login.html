@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Connexion — Postal Inspection Service{% endblock %}
+{% block content %}
+<section class="login-card">
+  <div class="stamp">CONFIDENTIAL</div>
+  <p class="eyebrow">Restricted personnel access</p>
+  <h1>Registre des inspecteurs</h1>
+  <p class="muted">Veuillez présenter vos identifiants de service pour consulter les archives.</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Identifiant de service</label><input name="username" autocomplete="username" required>
+    <label>Mot de passe</label><input type="password" name="password" autocomplete="current-password" required>
+    <button type="submit">Ouvrir la session</button>
+  </form>
+  <p class="small muted">Accès réservé au personnel autorisé.</p>
+</section>
+{% endblock %}

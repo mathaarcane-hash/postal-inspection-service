@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Postal Inspection Service{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="masthead">
+    <div class="seal">US</div>
+    <div class="masthead-copy">
+      <div class="eyebrow">Department of the Post Office</div>
+      <div class="brand">United States Postal Inspection Service</div>
+      <div class="district">Louisiana District · Official Records</div>
+    </div>
+    {% if current_user.is_authenticated %}<div class="account">{{ current_user.full_name }}<br><span>{{ current_user.rank }}</span></div>{% endif %}
+  </header>
+  {% if current_user.is_authenticated %}
+  <nav class="nav">
+    <a href="{{ url_for('main.dashboard') }}">Tableau de bord</a>
+    <a href="#">Enquêtes</a><a href="#">Suspects</a><a href="#">Preuves</a>
+    <a href="#">Rapports</a><a href="#">Mandats</a><a href="#">Personnel</a><a href="#">Carte</a>
+    <form method="post" action="{{ url_for('auth.logout') }}" class="logout-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="logout" type="submit">Déconnexion</button></form>
+  </nav>
+  {% endif %}
+  <main class="page">
+    {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="notice">{{ message }}</div>{% endfor %}{% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Official records · Restricted access · Louisiana District</footer>
+</body>
+</html>

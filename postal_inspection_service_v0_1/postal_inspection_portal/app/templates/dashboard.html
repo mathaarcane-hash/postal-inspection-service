@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord — Postal Inspection Service{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Louisiana District · 1890</p><h1>Registre des investigations</h1><p class="muted">Synthèse administrative des dossiers du service.</p></div><div class="date-box">BUREAU CENTRAL<br><strong>ÉTAT DES DOSSIERS</strong></div></div>
+<div class="stats">
+  <article><span>Dossiers enregistrés</span><strong>{{ investigation_count }}</strong></article>
+  <article><span>Individus répertoriés</span><strong>{{ suspect_count }}</strong></article>
+  <article><span>Éléments de preuve</span><strong>{{ evidence_count }}</strong></article>
+  <article><span>Inspecteurs actifs</span><strong>{{ inspector_count }}</strong></article>
+</div>
+<section class="paper-panel"><div class="section-title"><h2>Dernières affaires consignées</h2><span>REGISTRE OFFICIEL</span></div>
+{% if investigations %}<div class="table-wrap"><table><thead><tr><th>Référence</th><th>Affaire</th><th>Localité</th><th>État</th><th>Ouverture</th></tr></thead><tbody>
+{% for case in investigations %}<tr><td>{{ case.reference }}</td><td>{{ case.title }}</td><td>{{ case.location or "—" }}</td><td>{{ case.status }}</td><td>{{ case.opened_on.strftime("%d/%m/%Y") if case.opened_on else "—" }}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="empty">Aucune affaire n'a encore été enregistrée dans le registre.</p>{% endif %}
+</section>
+{% endblock %}
